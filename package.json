@@ -1,0 +1,9 @@
+{
+  "name": "contact-list",
+  "description": "contact list app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "4.4.3"
+  }
+}

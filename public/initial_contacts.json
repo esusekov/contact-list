@@ -1,0 +1,57 @@
+{
+
+ "contacts": [
+
+ {
+
+ "first_name": "Джон",
+
+ "last_name": "Кокрофт",
+
+ "email": "cockcroft@example.com"
+
+ },
+
+ {
+
+ "first_name": "Гульельмо",
+
+ "last_name": "Маркони",
+
+ "email": "marconi@example.com"
+
+ },
+
+ {
+
+ "first_name": "Роберт",
+
+ "last_name": "Милликен",
+
+ "email": "millikan@example.com"
+
+ },
+
+ {
+
+ "first_name": "Луи",
+
+ "last_name": "де Бройль",
+
+ "email": "de-broglie@example.com"
+
+ },
+
+ {
+
+ "first_name": "Виталий",
+
+ "last_name": "Гинзбург",
+
+ "email": "ginzburg@example.com"
+
+ }
+
+ ]
+
+}

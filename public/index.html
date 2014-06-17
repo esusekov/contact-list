@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html ng-app="contact-list">
+  <head>
+    <meta http-equiv=content-type content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body ng-controller="ListController as list" ng-click="list.deactivate_all()">
+    <div class="row layout">
+      <div class="col-xs-12  list-header">
+        <div class="row">
+          <div class="col-xs-11">
+            <h3 >Contact List</h3>
+          </div>
+          <div class="col-xs-1">
+            <span class="glyphicon glyphicon-question-sign q-sign"
+            title="Drag and drop contacts to swap, click contact to see options"></span>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xs-12 list-mainblock">
+        <div class="alert alert-danger" ng-show="list.get_error" ng-click="list.get_error=false">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>Error!</strong> A problem has been occurred while downloading your contacts.
+        </div>
+        <div class="row contact" draggable ng-class="{active: contact.active}"
+        ng-repeat="contact in list.contacts"
+        ng-click="list.change_active_contact(contact); $event.stopPropagation();">
+          <div class="col-xs-8 child-elements" ng-show="!contact.edit_mode">
+            <div class="row contact-name">
+              <div class="col-xs-12">
+                {{contact.first_name + " " + contact.last_name}}
+              </div>
+            </div>
+            <div class="row contact-email">
+              <div class="col-xs-12">
+                <a href="mailto:{{contact.email}}"
+                ng-click="$event.stopPropagation();"> {{contact.email}} </a>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-xs-4 contact-btn" ng-show="contact.active">
+            <div class="col-xs-3 contact-btn">
+              <button type="button" class="btn btn-default" title="Contact up!"
+              ng-click="list.up_contact($index); list.helper($event);">
+                <span class="glyphicon glyphicon-arrow-up"></span>
+              </button>
+            </div>
+            <div class="col-xs-3 contact-btn">
+              <button type="button" class="btn btn-default" title="Contact down!"
+              ng-click="list.down_contact($index); list.helper($event);">
+                <span class="glyphicon glyphicon-arrow-down"></span>
+              </button>
+            </div>
+            <div class="col-xs-3 contact-btn">
+              <button type="button" class="btn btn-default" title="Edit contact"
+              ng-click="list.to_edit_mode($index); list.helper($event);">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </button>
+            </div>
+            <div class="col-xs-3 contact-btn">
+              <button type="button" class="btn btn-default" title="Delete contact"
+              ng-click="list.delete_contact($index); list.helper($event);">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </div>
+          </div>
+          <div class="col-xs-6" ng-show="contact.edit_mode" ng-controller="EditingController as editCtrl">
+            <form name="editingForm"
+            ng-submit="editCtrl.submit($index, editingForm, true);" novalidate>
+              <p class="base-text"> Editing contact </p>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="{{contact.first_name}}"
+                ng-model="editCtrl.element.first_name" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="{{contact.last_name}}"
+                ng-model="editCtrl.element.last_name" required>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" placeholder="{{contact.email}}"
+                ng-model="editCtrl.element.email" required>
+              </div>
+              <button type="submit" class="btn btn-default"
+              ng-click="editCtrl.helper($event);">Submit</button>
+              <a class="btn btn-default"
+              ng-click="editCtrl.submit($index, editingForm, false); editCtrl.helper($event);">Cancel</a>
+            </form>
+          </div>
+        </div>
+        <div class="col-xs-12 alert alert-danger post-msg" ng-show="list.post_error" ng-click="list.post_error=false">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>Error!</strong> A problem has been occurred while uploading your contacts. Try it again.
+        </div>
+        <div class="col-xs-12 alert alert-success post-msg" ng-show="list.post_success" ng-click="list.post_success=false">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong>Well done!</strong> You successfully uploaded your contact list.
+        </div>
+        <div class="col-xs-10 contact-btn" ng-controller="AddingController as addCtrl">
+          <button type="button" class="btn btn-default btn-lg add-btn" title="Add new contact"
+          ng-click="addCtrl.change_state($event); $event.stopPropagation();"
+          ng-show="!addCtrl.state">
+           <span class="glyphicon glyphicon-plus"></span> Add contact
+          </button>
+          <div class="col-xs-8 add-form" ng-show="addCtrl.state">
+            <form name="addingForm"
+            ng-submit=" addCtrl.submit(addingForm, true);" novalidate>
+              <p class="base-text"> Adding contact </p>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="First name"
+                ng-model="addCtrl.element.first_name" required>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Last name"
+                ng-model="addCtrl.element.last_name" required>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control" placeholder="Email"
+                ng-model="addCtrl.element.email" required>
+              </div>
+              <button type="submit" class="btn btn-default"
+              ng-click="addCtrl.helper($event);">Submit</button>
+              <a class="btn btn-default"
+              ng-click=" addCtrl.submit(addingForm, false); addCtrl.helper($event);">Cancel</a>
+            </form>
+          </div>
+        </div>
+        <div class="col-xs-2 save-btn-container">
+          <button type="button" class="btn btn-default btn-lg save-btn" title="Save all"
+          ng-click="list.save_all(); list.helper($event);">
+            <span class="glyphicon glyphicon-floppy-disk"></span> Save
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+
+h3 {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-weight: bold;
+  margin: 15px 0 15px 0;
+}
+
+a {
+  pointer-events: auto;
+}
+
+.layout {
+  margin: 0 auto;
+  width: 628px;
+  box-shadow: 5px 5px 5px #ddd;
+}
+
+.list-header {
+  background-color: #eee;
+}
+
+.list-mainblock {
+  padding: 20px 20px 40px 20px;
+  border: 1px solid #eee;
+}
+
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+.contact {
+  font-size: 16px;
+  border: 1px solid #eee;
+  margin: 10px 0 10px 0;
+  padding: 10px;
+  background-color: #fdfdfd;
+  box-shadow: 5px 5px 5px #ddd;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.contact-name {
+  padding: 5px 0 5px 0;
+  font-weight: bold !important;
+}
+
+.contact-email {
+  padding: 5px 0 5px 0;
+  font-style: italic;
+}
+.active {
+  background-color: #f4f4f4;
+}
+
+.contact-btn {
+  padding: 0;
+}
+.save-btn-container {
+  position: relative;
+  padding: 0;
+}
+
+.save-btn {
+  position: absolute;
+   right: 0px;
+   box-shadow: 5px 5px 5px #ddd;
+}
+
+.add-btn {
+  box-shadow: 5px 5px 5px #ddd;
+}
+
+.drag {
+  opacity: 0.4;
+}
+
+.over {
+  border-style: dashed;
+  background-color: #f4f4f4;
+}
+
+.q-sign {
+  padding-top: 20px;
+}
+
+.add-form {
+  padding: 10px 25px 10px 25px;
+  border: 1px solid #eee;
+  box-shadow: 5px 5px 5px #ddd;
+}
+
+.base-text {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.post-msg {
+  margin-top: 10px;
+}
+
+.child-elements {
+  pointer-events: none;
+}
+
+.form-control.ng-invalid.ng-dirty {
+  border-color: #FA787E;
+  box-shadow: 0 0 10px #FA787E;
+}
+
+.form-control.ng-valid.ng-dirty {
+  border-color: #78FA89;
+  box-shadow: 0 0 10px #78FA89;
+}
