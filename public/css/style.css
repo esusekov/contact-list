@@ -46,7 +46,7 @@ a {
 
 .contact-name {
   padding: 5px 0 5px 0;
-  font-weight: bold !important;
+  font-weight: bold;
 }
 
 .contact-email {
