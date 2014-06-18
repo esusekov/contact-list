@@ -6,7 +6,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
   <body ng-controller="ListController as list" ng-click="list.deactivate_all()">
+
     <div class="row layout">
+
       <div class="col-xs-12  list-header">
         <div class="row">
           <div class="col-xs-11">
@@ -16,17 +18,20 @@
             <span class="glyphicon glyphicon-question-sign q-sign"
             title="Drag and drop contacts to swap, click contact to see options"></span>
           </div>
-
         </div>
       </div>
+
       <div class="col-xs-12 list-mainblock">
+
         <div class="alert alert-danger" ng-show="list.get_error" ng-click="list.get_error=false">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
             <strong>Error!</strong> A problem has been occurred while downloading your contacts.
         </div>
+
         <div class="row contact" draggable ng-class="{active: contact.active}"
         ng-repeat="contact in list.contacts"
         ng-click="list.change_active_contact(contact); $event.stopPropagation();">
+
           <div class="col-xs-8 child-elements" ng-show="!contact.edit_mode">
             <div class="row contact-name">
               <div class="col-xs-12">
@@ -39,8 +44,8 @@
                 ng-click="$event.stopPropagation();"> {{contact.email}} </a>
               </div>
             </div>
-
           </div>
+
           <div class="col-xs-4 contact-btn" ng-show="contact.active">
             <div class="col-xs-3 contact-btn">
               <button type="button" class="btn btn-default" title="Contact up!"
@@ -56,7 +61,7 @@
             </div>
             <div class="col-xs-3 contact-btn">
               <button type="button" class="btn btn-default" title="Edit contact"
-              ng-click="list.to_edit_mode($index); list.helper($event);">
+              ng-click="list.to_edit_mode(contact); list.helper($event);">
                 <span class="glyphicon glyphicon-pencil"></span>
               </button>
             </div>
@@ -67,6 +72,7 @@
               </button>
             </div>
           </div>
+
           <div class="col-xs-6" ng-show="contact.edit_mode" ng-controller="EditingController as editCtrl">
             <form name="editingForm"
             ng-submit="editCtrl.submit($index, editingForm, true);" novalidate>
@@ -89,15 +95,19 @@
               ng-click="editCtrl.submit($index, editingForm, false); editCtrl.helper($event);">Cancel</a>
             </form>
           </div>
+
         </div>
+
         <div class="col-xs-12 alert alert-danger post-msg" ng-show="list.post_error" ng-click="list.post_error=false">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
             <strong>Error!</strong> A problem has been occurred while uploading your contacts. Try it again.
         </div>
+
         <div class="col-xs-12 alert alert-success post-msg" ng-show="list.post_success" ng-click="list.post_success=false">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
             <strong>Well done!</strong> You successfully uploaded your contact list.
         </div>
+
         <div class="col-xs-10 contact-btn" ng-controller="AddingController as addCtrl">
           <button type="button" class="btn btn-default btn-lg add-btn" title="Add new contact"
           ng-click="addCtrl.change_state($event); $event.stopPropagation();"
@@ -127,6 +137,7 @@
             </form>
           </div>
         </div>
+        
         <div class="col-xs-2 save-btn-container">
           <button type="button" class="btn btn-default btn-lg save-btn" title="Save all"
           ng-click="list.save_all(); list.helper($event);">

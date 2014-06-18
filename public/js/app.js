@@ -6,27 +6,31 @@
     this.get_error = false;
     this.post_error = false;
     this.post_success = false;
-    $http.get('contacts.json').success(function(data){
+    $http.get('contacts.json').success(function(data){ //инициализация списка
       list.contacts = data.contacts;
     }).error(function(){
       list.get_error = true;
     });
     for (var i=0; i < this.contacts.length; i++) {
-      this.contacts[i].active = false;
-      this.contacts[i].edit_mode = false;
+      this.contacts[i].active = false; //инициализация активного режима
+      this.contacts[i].edit_mode = false;//и режима редактирования false-ами
     }
     this.delete_contact = function(index) {
+      //удаление контакта
       this.contacts.splice(index, 1);
     }
     this.add_contact = function(element) {
+      //добавление контакта
       this.contacts.push(element);
     }
     this.edit_contact = function(index, element) {
+      //переопределение данных контакта в соответствии с element
       for (var key in element) {
         this.contacts[index][key] = element[key];
       }
     }
     this.up_contact = function(index) {
+      //сместить контакт на строчку вверх
       if (index != 0) {
         var b = this.contacts[index];
         this.contacts[index] = this.contacts[index-1];
@@ -34,6 +38,7 @@
       }
     }
     this.down_contact = function(index) {
+      //сместить контакт на строчку вниз
       if (index != this.contacts.length-1) {
         var b = this.contacts[index];
         this.contacts[index] = this.contacts[index+1];
@@ -41,6 +46,7 @@
       }
     }
     this.change_active_contact = function(contact) {
+      //сделать данный contact активным
       if (contact.edit_mode) {
         return;
       }
@@ -53,16 +59,19 @@
     }
 
     this.deactivate_all = function() {
+      //сделать все контакты неактивными
       for (var i=0; i < this.contacts.length; i++) {
         this.contacts[i].active = false;
       }
     }
     this.swap_contacts = function(index1, index2) {
+      //поменять местами контакты с индексами index1, index2
       var b = this.contacts[index1];
       this.contacts[index1] = this.contacts[index2];
       this.contacts[index2] = b;
     }
     this.save_all = function() {
+      //отправить измененный список контактов на сервер
       var contacts_to_recieve = [];
       for (var i = 0; i < this.contacts.length; i++) {
         contacts_to_recieve[i] = JSON.parse(JSON.stringify(this.contacts[i]));
@@ -81,9 +90,10 @@
          list.post_error = true;
       });
     }
-    this.to_edit_mode = function(index) {
-      this.contacts[index].edit_mode = true;
-      this.contacts[index].active = false;
+    this.to_edit_mode = function(contact) {
+      //перевести contact в режим редактирования
+      contact.edit_mode = true;
+      contact.active = false;
     }
     this.helper = function(event) {
       event.target.blur();
@@ -95,10 +105,11 @@
     this.state = false; //false-видна кнопка, true-видна форма
     this.element = {};
     this.change_state = function(event) {
+      //поменять видимый элемент
       this.state = !this.state;
-      //сделать скролл к форме ????
     }
     this.submit = function(form, submit_flag){
+      //обработка формы добавления контакта
       if (submit_flag) {
         if (form.$valid) {
           $scope.list.add_contact(this.element);
@@ -117,6 +128,7 @@
   app.controller('EditingController', function($scope) {
     this.element = {};
     this.submit = function(index, form, submit_flag){
+      //обработка формы редактирования контакта
       if (submit_flag) {
         if (form.$valid) {
           $scope.list.edit_contact(index, this.element);
@@ -133,6 +145,7 @@
   });
 
   app.directive('draggable', function() {
+    //директива для элементов с функцией drag'n'drop
     return function(scope, element) {
       var el = element[0];
 
@@ -141,7 +154,9 @@
       el.addEventListener(
         'dragstart',
         function(e) {
+          scope.list.deactivate_all();
           e.dataTransfer.effectAllowed = 'move';
+          //при dragstart записываем index текущего элемента в dataTransfer
           e.dataTransfer.setData('index', scope.$index);
           this.classList.add('drag');
           return false;
@@ -190,6 +205,8 @@
             e.stopPropagation();
           }
           this.classList.remove('over');
+          //при drop достаем index перетаскиваемого контакта из dataTransfer
+          //и делаем swap с текущим контактом
           var drag_index = e.dataTransfer.getData('index');
           if (drag_index != scope.$index) {
             scope.$apply(function() {
